@@ -1,0 +1,39 @@
+Listar todos los productos
+db.productos.find();
+
+Listar contidad de productos
+db.productos.count();
+
+Agregar un producto
+db.productos.insertOne(
+	{
+	"nombre":"Regla",
+    	"descripcion":"Descripcion de producto",
+    	"foto":"Foto",
+    	"precio":1100,
+    	"codigo":"4qhh7xco"
+})
+
+Listar productos con precio menor a 1000 pesos
+db.productos.find({precio: {$lt: 1000}});
+
+Listar los productos con precio entre 1000 y 3000 pesos
+db.productos.find({precio:{$gt:1000,$lt:3000}})
+
+Listar los productos con precio mayor a 3000 pesos
+db.productos.find({precio: {$gt:3000}});
+
+Realizar una consulta que traiga sólo el nombre del tercer producto más barato
+db.productos.find({},{nombre:1,_id:0}).sort({precio:1}).skip(2).limit(1);
+
+Hacer update sobre los productos, agregando el campo stock a todos con un valor de 100.
+db.productos.updateMany({}, {$inc: {stock: 100}});
+
+Cambiar el stock a cero de los productos con precios mayores a 4000 pesos
+db.productos.updateMany({precio:{$gt: 4000}},{$set:{stock:0}});
+
+Borrar los productos con precio menor a 1000 pesos
+db.productos.deleteMany({precio:{$lt: 1000}});
+
+Crear usuario
+db.createUser({user: "pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce"}]});
